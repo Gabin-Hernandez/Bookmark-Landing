@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/monkey-25-32.png"
+    />
+
+    <title>Bookmark landing page</title>
+
+    <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+    <style>
+      .attribution {
+        font-size: 11px;
+        text-align: center;
+      }
+      .attribution a {
+        color: hsl(228, 45%, 44%);
+      }
+      body {
+        padding: 0;
+        margin: 0;
+      }
+      .main {
+        margin: 0px 0px 0px 70px;
+      }
+
+      /* nav bar right para moviles */
+      .hamburger {
+        background: none;
+        border: none;
+        cursor: pointer;
+        display: none; /* Oculto en escritorio inicialmente */
+      }
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        background-color: hsla(227, 43%, 21%, 0.938); /* Sombra */
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease;
+        z-index: 10; /* Debajo del menú */
+      }
+
+      .overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .nav-menu {
+        z-index: 20;
+      }
+      /* termina nav bar moviles */
+
+      .nav-bar {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        margin: 20px 0px;
+      }
+      .nav-menu {
+        display: flex;
+      }
+      .items {
+        display: flex;
+        list-style: none;
+      }
+      .items li a {
+        text-decoration: none;
+        margin-right: 30px;
+      }
+      .nav-btn {
+        margin: 10px;
+        background-color: hsl(0, 94%, 66%);
+        color: white;
+        cursor: pointer;
+        border: none;
+        border-radius: 3px;
+        width: 90px;
+        height: 30px;
+      }
+      .nav-btn:hover {
+        background-color: rgba(255, 255, 255, 0.966);
+        border: rgb(243, 69, 69) solid 1px;
+        color: hsl(0, 94%, 66%);
+      }
+      .header {
+        display: grid;
+        grid-template-columns: auto auto;
+      }
+      .text-header {
+        max-width: 55%;
+      }
+      .text-header p {
+        color: hsl(0, 0%, 59%);
+        margin: 40px 0px;
+        font-weight: 200;
+      }
+      .btn-one {
+        margin-right: 10px;
+        background-color: hsl(231, 69%, 60%);
+        box-shadow: 0px 3px 10px rgb(70, 69, 69);
+        height: 30px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        color: white;
+      }
+      .btn-two {
+        background-color: hsl(0, 1%, 70%);
+        box-shadow: 0px 3px 10px rgb(70, 69, 69);
+        height: 30px;
+        cursor: pointer;
+        border: none;
+        border-radius: 3px;
+        color: white;
+      }
+      .header-img {
+        background-image: url("images/bg-dots.svg");
+
+        max-height: 90%;
+      }
+      .header-img img {
+        width: 550px;
+        height: 400px;
+        padding-right: 90px;
+        object-fit: cover;
+      }
+      .first-component {
+        display: grid;
+        grid-template-columns: auto;
+        place-content: center;
+      }
+      .first-text {
+        margin-right: 50px;
+        text-align: center;
+      }
+      .first-text p {
+        max-width: 450px; /* Ancho máximo para el contenido */
+        margin: 20px auto; /* Centra el contenedor horizontalmente */
+      }
+      .features {
+        display: grid;
+        margin-right: 50px;
+        grid-template-columns: auto auto auto;
+        place-content: center;
+      }
+      .hr {
+        margin: 10px 120px 30px;
+        place-content: center;
+        width: 70%;
+      }
+      .features button {
+        margin: 10px;
+        width: 150px;
+        background: none;
+        border: none;
+      }
+      .features button:hover {
+        text-decoration: underline red solid 4px;
+        margin-bottom: 12px;
+      }
+      .responsive-one,
+      .responsive-two,
+      .responsive-three {
+        display: grid;
+        grid-template-columns: auto auto;
+        max-width: 100%;
+      }
+      .img-responsive img {
+        max-width: 100%;
+        max-height: 100%;
+        margin-right: 40px;
+      }
+      .text-responsive {
+        margin: 50px;
+        max-width: 400px; /* Ancho máximo para el contenido */
+        margin: 20px auto;
+      }
+      .button-responsive {
+        background-color: hsl(231, 69%, 60%);
+        color: white;
+        border: none;
+        width: 90px;
+        height: 30px;
+        border-radius: 4px;
+      }
+      .second-component {
+        display: grid;
+        grid-template-columns: auto;
+        place-content: center;
+      }
+      .second-text {
+        text-align: center;
+      }
+
+      .browsers {
+        display: grid;
+        grid-template-columns: auto auto auto;
+      }
+      .second-left {
+        text-align: center;
+        margin: 40px 10px 0px 0px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+          0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      }
+      .second-left img,
+      .second-center img,
+      .second-right img {
+        margin-top: 30px;
+      }
+      .second-right button {
+        margin-bottom: 10px;
+      }
+      .second-center {
+        text-align: center;
+        margin: 80px 10px 0px 0px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+          0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      }
+      .second-right {
+        text-align: center;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+          0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        margin: 120px 10px 0px 0px;
+      }
+      .install-btn {
+        background-color: hsl(231, 69%, 60%);
+        border-radius: 3px;
+        border: none;
+        width: 160px;
+        height: 30px;
+        color: white;
+        cursor: pointer;
+      }
+      .install-btn:hover {
+        background-color: rgba(0, 255, 255, 0);
+        border: blue solid 1px;
+        color: hsl(231, 69%, 60%);
+      }
+
+      .answer {
+        display: block;
+        max-height: 0; /* Initially hide the answer */
+        overflow: hidden;
+        transition: max-height 0.6s ease;
+        color: hsl(0, 0%, 59%);
+        margin: 10px;
+      }
+      .FAQs {
+        margin: 40px 40px 0px 0px;
+      }
+      .faqs-text {
+        text-align: center;
+        font-size: larger;
+      }
+      .faqs-text p {
+        color: hsl(0, 0%, 59%);
+      }
+      .container {
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+        place-content: center;
+      }
+      .faq-one {
+        margin-right: 10px;
+        text-align: center;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+          0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      }
+      .faq-btn {
+        display: grid;
+        grid-template-columns: auto;
+        place-content: center;
+      }
+      .button-one {
+        background-color: hsl(231, 69%, 60%);
+        margin: 40px 0px;
+        border-radius: 3px;
+        border: none;
+        width: 100px;
+        height: 30px;
+        color: white;
+        cursor: pointer;
+      }
+      .button-one:hover {
+        background-color: rgba(0, 255, 255, 0);
+        border: blue solid 1px;
+        color: hsl(231, 69%, 60%);
+      }
+
+      .footer {
+        display: grid;
+        grid-template-columns: auto;
+        place-content: center;
+        background-color: hsl(231, 69%, 60%);
+        margin: 0;
+      }
+      .footer p {
+        color: white;
+        letter-spacing: 7px;
+      }
+      .footer h5 {
+        color: white;
+        font-size: x-large;
+        max-width: 300px;
+        text-align: center;
+      }
+      .under-footer {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        background-color: hsl(229, 31%, 21%);
+      }
+      .left-footer {
+        display: flex;
+        margin: 20px;
+      }
+      .left-footer ul {
+        display: flex;
+        list-style: none;
+        margin: 0;
+      }
+      .left-footer a {
+        color: white;
+        text-decoration: none;
+        padding-right: 10px;
+        letter-spacing: 2px;
+      }
+      .left-footer a:hover {
+        color: red;
+      }
+      .left-footer img {
+        filter: invert(30%);
+        width: 120px;
+        height: 20px;
+      }
+      .footer-input {
+        margin-bottom: 40px;
+      }
+      .footer-input button {
+        height: 30px;
+        background-color: hsl(0, 94%, 66%);
+        color: white;
+        border-radius: 3px;
+        cursor: pointer;
+        border: none;
+      }
+      .footer-input button:hover {
+        background-color: rgba(255, 255, 255, 0.966);
+        border: rgb(243, 69, 69) solid 1px;
+        color: hsl(0, 94%, 66%);
+      }
+      .footer-input input {
+        height: 30px;
+
+        border-radius: 3px;
+        border: none;
+      }
+      .right-footer {
+        margin: 20px;
+      }
+      .right-footer img {
+        padding-right: 20px;
+        cursor: pointer;
+      }
+      .right-footer img:hover {
+        filter: invert(60%);
+      }
+      @media (max-width: 750px) {
+        html,
+        body {
+          overflow-x: hidden;
+          width: 100%;
+        }
+        * {
+          box-sizing: border-box;
+        }
+
+        .main {
+          margin: 0px;
+          padding: 0;
+          width: 100%;
+        }
+        .logo {
+          margin: 20px;
+        }
+
+        /* nav bar para moviles */
+        .hamburger {
+          display: block; /* Mostrar la hamburguesa en pantallas pequeñas */
+        }
+        .items li a {
+          color: white;
+          text-align: center;
+          padding: 0;
+          margin: 0;
+          font-size: xx-large;
+        }
+        .items li {
+          text-align: center;
+          width: 90%;
+          margin: 5px 0;
+          padding: 0;
+          border-bottom: solid 1px rgb(255, 255, 255);
+        }
+        .nav-menu {
+          text-align: center;
+          position: absolute;
+          top: 70px; /* Justo debajo del header */
+          right: 0;
+          width: 100%;
+          height: auto;
+          display: none; /* Ocultamos el menú por defecto en móviles */
+          flex-direction: column;
+          padding: 0;
+        }
+        .nav-btn {
+          background-color: rgba(245, 222, 179, 0);
+          border: solid white;
+          font-size: xx-large;
+          width: 90%;
+          height: auto;
+        }
+        .nav-menu ul {
+          display: flex;
+          flex-direction: column;
+          gap: 4rem;
+          text-align: center;
+        }
+        .items li:hover {
+          text-decoration: underline greenyellow solid 6px;
+        }
+        .nav-menu.active {
+          display: flex;
+        }
+        /* nav bar para moviles */
+
+        .header,
+        .features,
+        .responsive-one,
+        .responsive-two,
+        .responsive-three,
+        .first-component,
+        .second-component,
+        .browsers,
+        .first-text,
+        .second-left,
+        .second-center,
+        .second-right,
+        .FAQs,
+        .container,
+        .under-footer,
+        .left-footer {
+          display: flex;
+          width: 100%;
+          flex-direction: column;
+        }
+        .header-img {
+          max-width: 100%;
+          margin: 0;
+          background: none;
+        }
+        .header-img img,
+        .img-responsive img,
+        .first-text,
+        .features,
+        .hr,
+        .left-footer {
+          width: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        .text-header {
+          max-width: 100%;
+          order: 2;
+          margin: 20px 20px 40px;
+          text-align: center;
+        }
+        .first-text p {
+          margin: 20px;
+        }
+        .header-img {
+          order: 1;
+          max-width: 100%;
+        }
+        .header-img img {
+          width: 100%;
+          max-width: 380px;
+          height: auto;
+        }
+        .features {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .features button {
+          border-bottom: solid 1px gray;
+          margin: 20px;
+        }
+        .img-responsive {
+          width: 100%;
+          max-width: 330px;
+          margin: 30px auto 0;
+        }
+        .text-responsive,
+        .second-text,
+        .faqs-text {
+          max-width: 100%;
+          margin: 20px 20px 40px;
+          text-align: center;
+        }
+        .button-responsive {
+          display: none;
+        }
+        .second-left,
+        .second-center,
+        .second-right {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          border-radius: 10px;
+          margin: 10px 20px;
+          width: 90%;
+        }
+        .browsers img {
+          width: 40%;
+        }
+        .browsers {
+          width: 100%;
+          margin: 0 auto;
+        }
+        .install-btn {
+          margin-bottom: 10px;
+        }
+        .container {
+          width: 100%;
+          margin: 10px auto;
+        }
+        .faq-one {
+          margin-bottom: 12px;
+          border-radius: 10px;
+          margin-left: 10px;
+        }
+
+        .footer p {
+          margin: 50px 0 5px;
+        }
+        .footer-input {
+          display: flex;
+          flex-direction: column;
+        }
+        .input-btn {
+          margin-top: 20px;
+        }
+        .left-footer,
+        ul {
+          display: flex;
+          padding: 0;
+          margin-top: 10px;
+          flex-direction: column;
+          align-items: center;
+        }
+        .left-footer ul li {
+          margin-top: 20px;
+        }
+        .right-footer {
+          display: flex;
+          flex-direction: row;
+          place-content: center;
+          padding: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="main">
+      <nav class="nav-bar">
+        <div class="logo">
+          <img src="./images/logo-bookmark.svg" alt="" />
+        </div>
+        <div class="nav-menu" id="nav-menu">
+          <ul class="items">
+            <li><a href="https://gabin-hernandez.github.io/Advice-Gen/">Features </a></li>
+            <li><a href="https://gabin-hernandez.github.io/Age-Calculator/">Pricing </a></li>
+            <li><a href="https://gabin-hernandez.github.io/Form-card/">Contact </a></li>
+          </ul>
+          <a href=""><button class="nav-btn">Login</button></a>
+        </div>
+        <div class="nav-right">
+          <button class="hamburger" id="hamburger-btn">
+            <img src="./images/icon-hamburger.svg" alt="" />
+          </button>
+        </div>
+        <div class="overlay" id="overlay">
+          <img
+            style="filter: invert(100%); margin: 20px; width: 300px"
+            src="./images/logo-bookmark.svg"
+            alt=""
+          />
+        </div>
+      </nav>
+
+      <header class="header">
+        <div class="text-header">
+          <h1>A Simple Bookmark Manager</h1>
+          <p>
+            A clean and simple interface to organize your favourite websites.
+            Open a new browser tab and see your sites load instantly. Try it for
+            free.
+          </p>
+          <div class="headers-btn">
+            <button class="btn-one">Get it on Chrome</button>
+            <button class="btn-two">Get it on Firefox</button>
+          </div>
+        </div>
+        <div class="header-img">
+          <img src="./images/illustration-hero.svg" alt="" />
+        </div>
+      </header>
+
+      <div class="first-component">
+        <div class="first-text">
+          <h2>Features</h2>
+          <p>
+            Our aim is to make it quick and easy for you to access your
+            favourite websites. Your bookmarks sync between your devices so you
+            can access them on the go.
+          </p>
+        </div>
+        <div class="features">
+          <button id="simple-btn">Simple Bookmarking</button>
+          <button id="speedy-btn">Speedy Searching</button>
+          <button id="easy-btn">Easy Sharing</button>
+        </div>
+        <hr class="hr" style="border-bottom: 1px" />
+
+        <div class="responsive-fts">
+          <div class="responsive-one">
+            <div class="img-responsive">
+              <img src="./images/illustration-features-tab-1.svg" alt="" />
+            </div>
+            <div class="text-responsive">
+              <h3>Bookmark in one click</h3>
+              <p>
+                Organize your bookmarks however you like. Our simple
+                drag-and-drop interface gives you complete control over how you
+                manage your favourite sites.
+              </p>
+              <button class="button-responsive">More Info</button>
+            </div>
+          </div>
+
+          <div class="responsive-two">
+            <div class="img-responsive">
+              <img src="./images/illustration-features-tab-2.svg" alt="" />
+            </div>
+            <div class="text-responsive">
+              <h3>Intelligent search</h3>
+              <p>
+                Our powerful search feature will help you find saved sites in no
+                time at all. No need to trawl through all of your bookmarks.
+              </p>
+              <button class="button-responsive">More Info</button>
+            </div>
+          </div>
+
+          <div class="responsive-three">
+            <div class="img-responsive">
+              <img src="./images/illustration-features-tab-3.svg" alt="" />
+            </div>
+            <div class="text-responsive">
+              <h3>Share your bookmarks</h3>
+              <p>
+                Easily share your bookmarks and collections with others. Create
+                a shareable link that you can send at the click of a button.
+              </p>
+              <button class="button-responsive">More Info</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="second-component">
+        <div class="second-text">
+          <h3>Download the extension</h3>
+          <p>
+            We’ve got more browsers in the pipeline. Please do let us know if
+            you’ve got a favourite you’d like us to prioritize.
+          </p>
+        </div>
+        <div class="browsers">
+          <div class="second-left">
+            <img src="./images/logo-chrome.svg" alt="" />
+            <h4>Add to Chrome</h4>
+            <p>Minimum version 62</p>
+            <button class="install-btn">Add & Install Extension</button>
+          </div>
+          <div class="second-center">
+            <img src="./images/logo-firefox.svg" alt="" />
+            <h4>Add to Firefox</h4>
+            <p>Minimum version 55</p>
+            <button class="install-btn">Add & Install Extension</button>
+          </div>
+          <div class="second-right">
+            <img src="./images/logo-opera.svg" alt="" />
+            <h4>Add to Opera</h4>
+            <p>Minimum version 46</p>
+            <button class="install-btn">Add & Install Extension</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="FAQs">
+        <div class="faqs-text">
+          <h4>Frequently Asked Questions</h4>
+          <p>
+            Here are some of our FAQs. If you have any other questions you’d
+            like answered please feel free to email us.
+          </p>
+        </div>
+        <div class="container">
+          <!-- EMPIEZA EL ACORDION -->
+          <div class="faq-one">
+            <p>
+              <a class="question">What is Bookmark?</a>
+              <span class="answer">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
+                tincidunt justo eget ultricies fringilla. Phasellus blandit
+                ipsum quis quam ornare mattis.
+              </span>
+            </p>
+            <div class="faq-answer">
+              <input type="image" src="./images/icon-arrow.svg" />
+            </div>
+          </div>
+
+          <div class="faq-one">
+            <p>
+              <a class="question">How can I request a new browser?</a>
+              <span class="answer">
+                Vivamus luctus eros aliquet convallis ultricies. Mauris augue
+                massa, ultricies non ligula. Suspendisse imperdiet. Vivamus
+                luctus eros aliquet convallis ultricies. Mauris augue massa,
+                ultricies non ligula. Suspendisse imperdie tVivamus luctus eros
+                aliquet convallis ultricies. Mauris augue massa, ultricies non
+                ligula. Suspendisse imperdiet.
+              </span>
+            </p>
+            <div class="faq-answer">
+              <input type="image" src="./images/icon-arrow.svg" />
+            </div>
+          </div>
+
+          <div class="faq-one">
+            <p>
+              <a class="question"> Is there a mobile app? </a>
+              <span class="answer">
+                Sed consectetur quam id neque fermentum accumsan. Praesent
+                luctus vestibulum dolor, ut condimentum urna vulputate eget.
+                Cras in ligula quis est pharetra mattis sit amet pharetra purus.
+                Sed sollicitudin ex et ultricies bibendum.
+              </span>
+            </p>
+            <div class="faq-answer">
+              <input type="image" src="./images/icon-arrow.svg" />
+            </div>
+          </div>
+
+          <div class="faq-one">
+            <p>
+              <a class="question"> What about other Chromium browsers? </a>
+              <span class="answer">
+                Integer condimentum ipsum id imperdiet finibus. Vivamus in
+                placerat mi, at euismod dui. Aliquam vitae neque eget nisl
+                gravida pellentesque non ut velit.
+              </span>
+            </p>
+            <div class="faq-answer">
+              <input type="image" src="./images/icon-arrow.svg" />
+            </div>
+          </div>
+        </div>
+        <div class="faq-btn">
+          <button class="button-one">More Info</button>
+        </div>
+      </div>
+    </main>
+    <footer class="footer">
+      <p>35,000+ already joined</p>
+      <h5>Stay up-to-date with what we’re doing</h5>
+      <div class="footer-input">
+        <input type="email" id="" />
+        <button class="input-btn">Contact Us</button>
+      </div>
+    </footer>
+    <div class="under-footer">
+      <div class="left-footer">
+        <img src="./images/logo-bookmark.svg" alt="" />
+        <ul>
+          <li><a href="https://gabin-hernandez.github.io/Advice-Gen/">Features </a></li>
+          <li><a href="https://gabin-hernandez.github.io/Age-Calculator/">Pricing </a></li>
+          <li><a href="https://gabin-hernandez.github.io/Form-card/">Contact </a></li>
+        </ul>
+      </div>
+      <div class="right-footer">
+        <a
+          style="text-decoration: none"
+          href="https://www.facebook.com/gabriel.hernandez.375175"
+        >
+          <img src="./images/icon-facebook.svg" alt="" />
+        </a>
+        <a
+          style="text-decoration: none"
+          href="https://github.com/Gabin-Hernandez"
+        >
+          <img src="./images/monkey-25-32.png" alt="" />
+        </a>
+      </div>
+    </div>
+    <script src="./toggle.js"></script>
+    <script src="./faqs.js"></script>
+    <script src="./menu.js"></script>
+  </body>
+</html>
